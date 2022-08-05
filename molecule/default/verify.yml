@@ -1,0 +1,12 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+      - name: Check if wrapper runs at all (expected failure)
+        shell: "/usr/bin/socks5-forward-http"
+        async: 5
+        poll: 1
+        ignore_errors: yes

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo "Forwarding {{ port.remote_host }}:{{ port.remote_port }} -> {{ port.bind_ip| default("0.0.0.0") }}:{{ port.local_port }}"
+exec socat tcp4-LISTEN:{{ port.local_port }},reuseaddr,fork,keepalive,bind={{ port.bind_ip| default("0.0.0.0") }} SOCKS4A:{{ socks_host }}:{{ port.remote_host }}:{{ port.remote_port }},socksport={{ socks_port }}

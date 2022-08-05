@@ -1,0 +1,10 @@
+- name: Install socat
+  package:
+      name: socat
+      state: present
+
+- name: Setup port forwarding
+  loop: "{{ ports }}"
+  loop_control:
+      loop_var: port
+  include_tasks: setup-forwarding.yaml

@@ -1,0 +1,14 @@
+galaxy_info:
+  author: your name
+  role_name: "socks5_reverse_proxy"
+  namespace: riotkit
+  description: socks5 reverse proxy
+  license: Apache-2.0
+  min_ansible_version: 2.11
+  galaxy_tags:
+      - socks5
+      - proxy
+      - reverse-proxy
+      - tor
+      - onion
+dependencies: []

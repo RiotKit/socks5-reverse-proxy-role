@@ -1,0 +1,7 @@
+---
+- name: Prepare
+  hosts: all
+  tasks:
+    - name: Install net-tools for netstat
+      apt:
+          name: net-tools

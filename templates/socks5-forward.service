@@ -1,0 +1,12 @@
+[Unit]
+Description=Forwards {{ port.name }}
+;After=tor.service
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/socks5-forward-{{ port.name }}
+KillMode=process
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

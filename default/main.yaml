@@ -1,0 +1,11 @@
+socks_port: 9050
+socks_host: 127.0.0.1
+
+ports: []
+# - name: http
+#   local_port: 80
+#   remote_port: 80
+#   remote_host: some-domain.onion
+#   systemd_enabled: true
+#   systemd_restart: true
+#   bind_ip: 0.0.0.0
