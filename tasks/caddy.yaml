@@ -1,0 +1,33 @@
+- name: Create configuration directory
+  file:
+      path: /etc/riotkit/gateway/
+      state: directory
+
+- name: Add a configuration
+  template:
+      src: caddy.conf.j2
+      dest: /etc/riotkit/gateway/Caddyfile
+
+- name: Install Caddy
+  apt:
+      deb: https://github.com/caddyserver/caddy/releases/download/v{{ caddy_version }}/caddy_{{ caddy_version }}_linux_amd64.deb
+
+- name: Allow a non-root process to listen on 80 port
+  shell: "setcap CAP_NET_BIND_SERVICE=+eip /usr/bin/caddy"
+
+- name: Disable default caddy service on startup
+  systemd:
+      name: caddy
+      enabled: false
+      state: stopped
+
+- name: Create a webserver service
+  template:
+      src: http-to-https.service.j2
+      dest: /etc/systemd/system/http-to-https.service
+
+- name: Enable and start systemd service
+  systemd:
+      name: http-to-https
+      enabled: true
+      state: started

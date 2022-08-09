@@ -9,3 +9,6 @@ ports: []
 #   systemd_enabled: true
 #   systemd_restart: true
 #   bind_ip: 0.0.0.0
+
+webserver_enabled: false
+caddy_version: 2.5.2

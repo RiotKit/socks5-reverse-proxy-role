@@ -8,3 +8,7 @@
   loop_control:
       loop_var: port
   include_tasks: setup-forwarding.yaml
+
+- name: Setup HTTP gateway if enabled
+  when: webserver_enabled
+  include_tasks: caddy.yaml
