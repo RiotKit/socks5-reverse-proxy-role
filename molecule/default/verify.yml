@@ -20,13 +20,16 @@
             port: 9050
             delay: 20
 
+      - name: Validate NGINX config
+        shell: "nginx -t"
+
       - name: Clean up NGINX
         shell: "killall nginx -9 || true; nginx &"
 
       - name: Wait for NGINX to start
         wait_for:
             port: 443
-            delay: 5
+            delay: 10
 
       - name: Perform a test request (NGINX -> SOCKS5 Forwarding -> TOR)
         shell: "curl https://127.0.0.1 -k -H 'Host: duckduckgo.com'"
