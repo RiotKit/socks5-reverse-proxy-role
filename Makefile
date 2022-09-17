@@ -1,3 +1,6 @@
+pre-env-setup:
+	pip install pipenv
+
 build:
 	pipenv install
 
