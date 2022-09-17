@@ -6,13 +6,15 @@
       include_role:
           name: "socks5-reverse-proxy"
       vars:
+          systemd_enable: false
           socks_port: 9050
           socks_host: 127.0.0.1
           ports:
-              - name: http
-                local_port: 80
-                remote_port: 80
-                remote_host: some-domain.onion
+              - name: http-passthrough
+                local_port: 8101
+                bind_ip: 127.0.0.1
+                remote_port: 443
+                remote_host: duckduckgo.com
                 systemd_enabled: true
                 systemd_restart: false
-                bind_ip: 0.0.0.0
+                type: "tls"  # forward as tcp on tls port only for testing

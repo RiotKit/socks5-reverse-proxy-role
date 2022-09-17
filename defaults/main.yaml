@@ -2,13 +2,26 @@ socks_port: 9050
 socks_host: 127.0.0.1
 
 ports: []
-# - name: http
-#   local_port: 80
-#   remote_port: 80
+# - name: https
+#   local_port: 4443
+#   bind_ip: 127.0.0.1
+#   remote_port: 443
 #   remote_host: some-domain.onion
 #   systemd_enabled: true
 #   systemd_restart: true
-#   bind_ip: 0.0.0.0
+#   type: "tls"
 
-webserver_enabled: false
-caddy_version: 2.5.2
+
+# NGINX reverse proxy configuration
+forward_http_port: true
+tls_listen_opts: "so_keepalive=on"
+tls_proxy_connect_timeout: 60s
+tls_proxy_timeout: 10800s
+tls_dns_resolver: 1.1.1.1
+
+access_log: off
+error_log: /dev/stderr
+
+worker_processes: 4
+worker_connections: 768
+systemd_enable: true

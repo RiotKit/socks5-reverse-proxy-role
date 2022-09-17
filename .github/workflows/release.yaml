@@ -1,0 +1,31 @@
+name: Release
+on:
+    pull_request:
+    push:
+
+jobs:
+    test-and-build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+              with:
+                  fetch-depth: 0
+
+            - name: Set up Python
+              uses: actions/setup-python@v4.2.0
+              with:
+                  python-version: '3.10'
+
+            - name: Build
+              run: "make build"
+
+            - name: Test
+              run: "make test"
+
+            - name: SonarCloud Scan
+              #if: github.ref == 'refs/heads/main' && inputs.sonarCloudEnabled
+              uses: sonarsource/sonarcloud-github-action@master
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

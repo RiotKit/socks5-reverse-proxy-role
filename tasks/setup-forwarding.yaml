@@ -11,13 +11,13 @@
       mode: "u+rw,g+r,o"
 
 - name: Enable service
-  when: port.systemd_enabled
+  when: port.systemd_enabled and systemd_enable
   systemd:
       name: "socks5-forward-{{ port.name }}"
       enabled: true
 
 - name: Restart service
-  when: port.systemd_restart
+  when: port.systemd_restart and systemd_enable
   systemd:
       name: "socks5-forward-{{ port.name }}"
       state: restarted

@@ -1,0 +1,18 @@
+- name: Install NGINX
+  package:
+      name: ["nginx", "libnginx-mod-stream"]
+
+- name: Add a configuration
+  template:
+      src: nginx.conf.j2
+      dest: /etc/nginx/nginx.conf
+
+- name: Enable NGINX on system startup
+  when: systemd_enable
+  systemd:
+      name: nginx
+      enabled: true
+      state: restarted
+
+- name: Test NGINX configuration
+  shell: "nginx -t"

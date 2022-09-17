@@ -5,8 +5,35 @@
   hosts: all
   gather_facts: false
   tasks:
-      - name: Check if wrapper runs at all (expected failure)
-        shell: "/usr/bin/socks5-forward-http"
-        async: 5
-        poll: 1
-        ignore_errors: yes
+      - name: Run forwarding
+        shell: "killall socat; /usr/bin/socks5-forward-http-passthrough &"
+
+      - name: Install TOR
+        package:
+            name: tor
+
+      - name: Activate TOR in background
+        shell: "tor &"
+
+      - name: Wait for TOR to start
+        wait_for:
+            port: 9050
+            delay: 20
+
+      - name: Clean up NGINX
+        shell: "killall nginx -9 || true; nginx &"
+
+      - name: Wait for NGINX to start
+        wait_for:
+            port: 443
+            delay: 5
+
+      - name: Perform a test request (NGINX -> SOCKS5 Forwarding -> TOR)
+        shell: "curl https://127.0.0.1 -k -H 'Host: duckduckgo.com'"
+        register: curl_output
+
+      # the service selected for testing is duckduckgo.com, it does respond with 301 Moved
+      - name: Assert that a HTTP response was present
+        assert:
+            that:
+                - "'DuckDuckGo' in curl_output.stdout"  # asserting the title in body

@@ -4,8 +4,8 @@ dependency:
 driver:
     name: docker
 platforms:
-    - name: ubuntu-20.04-systemd
-      image: jrei/systemd-ubuntu
+    - name: instance
+      image: python:3.10-bullseye
       pre_build_image: true
 provisioner:
     name: ansible
