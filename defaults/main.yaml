@@ -20,7 +20,7 @@ tls_proxy_timeout: 10800s
 tls_dns_resolver: 1.1.1.1
 
 access_log: off
-error_log: /dev/stderr
+error_log: /var/log/nginx/error.log
 
 worker_processes: 4
 worker_connections: 768
