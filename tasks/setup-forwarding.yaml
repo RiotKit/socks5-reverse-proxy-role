@@ -1,22 +1,22 @@
-- name: Create a wrapper
+- name: Create a wrapper ({{ port.name }})
   template:
       src: usr/bin/socks5-forward
       dest: "/usr/bin/socks5-forward-{{ port.name }}"
       mode: "u+rwx,g+rx,o"
 
-- name: Create a systemd service
+- name: Create a systemd service ({{ port.name }})
   template:
       src: socks5-forward.service
       dest: "/etc/systemd/system/socks5-forward-{{ port.name }}.service"
       mode: "u+rw,g+r,o"
 
-- name: Enable service
+- name: Enable service ({{ port.name }})
   when: port.systemd_enabled and systemd_enable
   systemd:
       name: "socks5-forward-{{ port.name }}"
       enabled: true
 
-- name: Restart service
+- name: Restart service ({{ port.name }})
   when: port.systemd_restart and systemd_enable
   systemd:
       name: "socks5-forward-{{ port.name }}"
