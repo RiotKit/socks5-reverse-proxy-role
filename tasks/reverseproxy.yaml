@@ -1,5 +1,6 @@
 - name: Install NGINX
   package:
+      update_cache: true
       name: ["nginx", "libnginx-mod-stream"]
 
 - name: Add a configuration
