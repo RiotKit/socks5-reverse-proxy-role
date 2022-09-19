@@ -41,8 +41,9 @@ http {
 
 stream {
     upstream tls_upstream {
+        {% set i = 0 %}
         {% for port in ports %}
-        {% if port.type == "tls" %} server {{ port.bind_ip }}:{{ port.local_port }} fail_timeout=15s; {% endif %}
+        {% if port.type == "tls" %}{% set i = i + 1 %} server {{ port.bind_ip }}:{{ port.local_port }} fail_timeout={{ tls_fail_timeout }} {% if i > 1 %}backup{% endif %}; {% endif %}
         {% endfor %}
     }
 

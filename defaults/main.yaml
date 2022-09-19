@@ -18,6 +18,7 @@ tls_listen_opts: "so_keepalive=on"
 tls_proxy_connect_timeout: 60s
 tls_proxy_timeout: 10800s
 tls_dns_resolver: 1.1.1.1
+tls_fail_timeout: 8s
 
 access_log: off
 error_log: /var/log/nginx/error.log
